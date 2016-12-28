@@ -1,0 +1,29 @@
+$anim-quick-time: 200ms;
+$anim-quick:  cubic-bezier(.4,0,.2,1) $anim-quick-time;
+$anim-slow: linear 500ms;
+
+@mixin ink-container() {
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * Elevation data sourced from https://github.com/google/material-design-lite.
+ * No changes made apart from using shadow colours without variables.
+ * Please refer to the LICENSE in the linked repository for details.
+ */
+@mixin elevated($level) {
+  @if($level == 1) {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.12);
+  }
+  @if($level == 2) {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+  @if($level == 6) {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.2), 0 3px 5px -1px rgba(0, 0, 0, 0.12);
+  }
+  @if($level == 12) {
+    box-shadow: 0 12px 17px 2px rgba(0, 0, 0, 0.14), 0  9px 22px 3px rgba(0, 0, 0, 0.2), 0  4px 7px -4px rgba(0, 0, 0, 0.12);
+  }
+}

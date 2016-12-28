@@ -1,0 +1,28 @@
+@import "Component.scss";
+$height: 32px;
+
+.mr-flat-button {
+  @include ink-container();
+
+  display: inline-block;
+  min-width: 64px;
+  height: $height;
+
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  padding: 0 8px;
+  margin: 0 4px;
+  text-align: center;
+  transition: background-color $anim-quick, color $anim-quick;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+
+  & > .mr-text-view {
+    height: $height;
+    line-height: $height;
+  }
+}

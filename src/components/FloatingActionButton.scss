@@ -1,0 +1,77 @@
+@import "Component.scss";
+$icon-size: 24px;
+$size: 56px;
+$offset: ($size - $icon-size) / 2;
+$mini-size: 40px;
+$mini-offset: ($mini-size - $icon-size) / 2;
+
+@keyframes spin-reveal {
+  from {
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.mr-floating-action-button {
+  @include elevated(6);
+  @include ink-container();
+
+  display: inline-block;
+  width: $size;
+  height: $size;
+
+  border-radius: 100%;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow $anim-quick, background-color $anim-quick, color $anim-quick, width $anim-slow,
+              height $anim-slow;
+  user-select: none;
+
+  &__icon, &__iconToggled {
+    position: absolute;
+    top: $offset;
+    left: $offset;
+    transition: opacity $anim-quick, transform $anim-quick, top $anim-slow, left $anim-slow, color $anim-slow;
+  }
+
+  /* Icon to be shown when toggle is on */
+  &__iconToggled {
+    opacity: 0;
+    transform: rotate(-45deg);
+  }
+
+  &--mini {
+    width: $mini-size;
+    height: $mini-size;
+
+    .mr-floating-action-button__icon, .mr-floating-action-button__iconToggled {
+      top: $mini-offset;
+      left: $mini-offset;
+    }
+  }
+
+  &--active {
+    @include elevated(12);
+  }
+
+  &--disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  &--toggled {
+    .mr-floating-action-button__icon {
+      opacity: 0;
+      transform: rotate(45deg);
+    }
+
+    .mr-floating-action-button__iconToggled {
+      opacity: 1;
+      transform: rotate(0);
+    }
+  }
+}

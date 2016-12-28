@@ -35,3 +35,11 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# Compiled TypeScript and TypeScript React sources
+*.js
+*.jsx
+
+# Compiled Sass sources
+*.map
+*.css

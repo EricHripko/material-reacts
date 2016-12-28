@@ -1,0 +1,12 @@
+@import "Component";
+
+.mr-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+
+  font-size: 0;
+  font-feature-settings: 'liga';   /* Fix for web fonts in IE */
+  outline: none;
+  transition: color $anim-quick;
+}

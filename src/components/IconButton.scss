@@ -1,0 +1,25 @@
+@import "Component.scss";
+$size: 40px;
+
+.mr-icon-button {
+  @include ink-container();
+
+  display: inline-block;
+  width: $size;
+  height: $size;
+
+  border-radius: 100%;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  transition: background-color $anim-quick, color $anim-quick;
+  user-select: none;
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+
+  & > .mr-icon {
+    margin: 8px;
+  }
+}

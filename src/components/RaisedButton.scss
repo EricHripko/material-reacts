@@ -1,0 +1,34 @@
+@import "Component.scss";
+$height: 32px;
+
+.mr-raised-button {
+  @include elevated(1);
+  @include ink-container();
+
+  display: inline-block;
+  min-width: 64px;
+  height: $height;
+
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  padding: 0 8px;
+  margin: 0 4px;
+  text-align: center;
+  transition: box-shadow $anim-quick, background-color $anim-quick, color $anim-quick;
+  user-select: none;
+
+  &--active {
+    @include elevated(2);
+  }
+
+  &--disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  & > .mr-text-view {
+    height: $height;
+    line-height: $height;
+  }
+}

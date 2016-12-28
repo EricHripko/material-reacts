@@ -1,0 +1,30 @@
+@import "Component.scss";
+
+.mr-image {
+  display: inline-block;
+  position: relative;
+
+  overflow: hidden;
+  user-select: none;
+
+  /*
+   * Internal element that fades the image in once it's loaded.
+   */
+  &__content {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-position: center center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity $anim-quick;
+
+    &--show {
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+$height: 48px;
+
+.mr-subheader {
+  cursor: default;
+  height: $height;
+
+  & > .mr-text-view {
+    height: $height;
+    line-height: $height;
+    margin-left: 16px;
+  }
+}

@@ -1,0 +1,20 @@
+$size: 40px;
+
+.mr-avatar {
+  display: inline-block;
+  height: $size;
+  width: $size;
+
+  animation: fade-in 200ms;
+  border: none;
+  border-radius: 100%;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 100;
+  line-height: $size;
+  text-align: center;
+  user-select: none;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+}
