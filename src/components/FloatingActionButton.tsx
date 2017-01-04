@@ -29,11 +29,12 @@ export interface FloatingActionButtonState {
     isToggled: boolean
 }
 
+const CSS_CLASS_NAME:string = "mr-floating-action-button__button";
+
 /**
- * Raised buttons add dimension to mostly flat layouts. They
- * emphasize functions on busy or wide spaces. This component
- * adheres to Material Design > Buttons > Raised Buttons
- * recommendations.
+ * A floating action button represents the primary action in
+ * an application. This component adheres to Material Design >
+ * Buttons > Floating Action Button recommendations.
  */
 export class FloatingActionButton extends Button<FloatingActionButtonProps & ComponentProps,
                                                  FloatingActionButtonState & ComponentState> {
@@ -66,21 +67,21 @@ export class FloatingActionButton extends Button<FloatingActionButtonProps & Com
     }
 
     render() {
-        let cls:string = "mr-floating-action-button";
+        let cls:string = CSS_CLASS_NAME;
         if(this.props.isDisabled) {
-            cls += " mr-floating-action-button--disabled";
+            cls += " " + CSS_CLASS_NAME + "--disabled";
         }
         else {
             if(this.state.isActive) {
-                cls += " mr-floating-action-button--active";
+                cls += " " + CSS_CLASS_NAME + "--active";
             }
             if(this.state.isToggled) {
-                cls += " mr-floating-action-button--toggled";
+                cls += " " + CSS_CLASS_NAME + "--toggled";
             }
         }
 
         if(this.props.isMini) {
-            cls += " mr-floating-action-button--mini";
+            cls += " " + CSS_CLASS_NAME + "--mini";
         }
 
         let foreColor:string = this.variant === ThemeStyle.Light ? LIGHT_VARIANT_TEXT_FORE : DARK_VARIANT_TEXT_FORE;
@@ -99,38 +100,48 @@ export class FloatingActionButton extends Button<FloatingActionButtonProps & Com
             foreColor = null;
         }
 
-        console.log(this.props.children);
-
-        const style = styles(this.props.style, {
+        const style = {
             backgroundColor: backColor
-        });
+        };
+        let rootCls:string = "mr-floating-action-button";
+        if(this.props.isMini) {
+            rootCls += " mr-floating-action-button--mini";
+        }
+        if(this.state.isToggled) {
+            rootCls += " mr-floating-action-button--toggled";
+        }
 
         return (
-            <div ref="me"
-                 className={cls}
-                 style={style}
-                 tabIndex={tabIndex}
+            <div className={rootCls}
+                 style={this.props.style}>
+                <div ref="me"
+                     className={cls}
+                     style={style}
+                     tabIndex={tabIndex}
 
-                 onMouseDown={this.onPressBegin}
-                 onMouseUp={this.onPressEnd}
-                 onKeyDown={this.onKeyDown}
-                 onKeyUp={this.onKeyUp}
-                 onFocus={this.onFocus}
-                 onBlur={this.onBlur}
-                 onMouseEnter={this.onHover}
-                 onMouseLeave={this.onLeave}>
-                <Icon className="mr-floating-action-button__icon"
-                      customColor={foreColor}>{this.props.icon}</Icon>
-                <Icon className="mr-floating-action-button__iconToggled"
-                      customColor={foreColor}>{this.props.iconToggled}</Icon>
-                <Ink ref="ink"
-                     isActive={this.state.isActive}
-                     color={this.inkColor}
-                     size={this.state.inkSpillSize}
-                     originTop={this.state.inkOriginTop}
-                     originLeft={this.state.inkOriginLeft}/>
-                <Focus isActive={this.state.isFocus}
-                       color={this.focusColor}/>
+                     onMouseDown={this.onPressBegin}
+                     onMouseUp={this.onPressEnd}
+                     onKeyDown={this.onKeyDown}
+                     onKeyUp={this.onKeyUp}
+                     onFocus={this.onFocus}
+                     onBlur={this.onBlur}
+                     onMouseEnter={this.onHover}
+                     onMouseLeave={this.onLeave}>
+                    <Icon className="mr-floating-action-button__icon"
+                          customColor={foreColor}>{this.props.icon}</Icon>
+                    <Icon className="mr-floating-action-button__iconToggled"
+                          customColor={foreColor}>{this.props.iconToggled}</Icon>
+                    <Ink ref="ink"
+                         isActive={this.state.isActive}
+                         color={this.inkColor}
+                         size={this.state.inkSpillSize}
+                         originTop={this.state.inkOriginTop}
+                         originLeft={this.state.inkOriginLeft}/>
+                    <Focus isActive={this.state.isFocus}
+                           color={this.focusColor}/>
+                </div>
+                {this.props.children}
+                <div className="mr-floating-action-button__wash"></div>
             </div>
         );
     }

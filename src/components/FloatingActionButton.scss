@@ -4,6 +4,8 @@ $size: 56px;
 $offset: ($size - $icon-size) / 2;
 $mini-size: 40px;
 $mini-offset: ($mini-size - $icon-size) / 2;
+$gap: 16px;
+$delay: 35ms;
 
 @keyframes spin-reveal {
   from {
@@ -17,19 +19,63 @@ $mini-offset: ($mini-size - $icon-size) / 2;
 }
 
 .mr-floating-action-button {
-  @include elevated(6);
-  @include ink-container();
-
-  display: inline-block;
+  display: block;
   width: $size;
   height: $size;
 
-  border-radius: 100%;
-  cursor: pointer;
-  outline: none;
-  transition: box-shadow $anim-quick, background-color $anim-quick, color $anim-quick, width $anim-slow,
-              height $anim-slow;
-  user-select: none;
+  position: relative;
+  transition: transform $anim-quick, opacity $anim-quick;
+  z-index: 6;
+
+  /* ELEMENTS */
+  &__button {
+    @include elevated(6);
+    @include ink-container();
+
+    display: block;
+    width: $size;
+    height: $size;
+
+    border-radius: 100%;
+    cursor: pointer;
+    outline: none;
+    transition: box-shadow $anim-quick, background-color $anim-quick, color $anim-quick, width $anim-slow,
+                height $anim-slow;
+    user-select: none;
+
+    /* MODIFIERS */
+    &--mini {
+      width: $mini-size;
+      height: $mini-size;
+
+      .mr-floating-action-button__icon, .mr-floating-action-button__iconToggled {
+        top: $mini-offset;
+        left: $mini-offset;
+      }
+    }
+
+    &--active {
+      @include elevated(12);
+    }
+
+    &--disabled {
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    &--toggled {
+      & > .mr-floating-action-button__icon {
+        opacity: 0;
+        transform: rotate(45deg);
+      }
+
+      & > .mr-floating-action-button__iconToggled {
+        opacity: 1;
+        transform: rotate(0);
+      }
+    }
+    /* END OF MODIFIERS */
+  }
 
   &__icon, &__iconToggled {
     position: absolute;
@@ -44,34 +90,52 @@ $mini-offset: ($mini-size - $icon-size) / 2;
     transform: rotate(-45deg);
   }
 
+  /* Ink Wash effect */
+  &__wash {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(224, 224, 224, 0.5);
+    transition: opacity $anim-quick;
+    opacity: 0;
+    z-index: 0;
+  }
+
+  /* Action mini-buttons */
+  .mr-floating-action-button {
+    position: absolute;
+    left: ($size - $mini-size) / 2;
+
+    /* Note: Start counting from 2, as first child is the button itself. */
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i + 1}) {
+        top: -$i * ($mini-size + $gap);
+        transition-delay: ($i - 1) * $delay;
+      }
+    }
+
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  /* MODIFIERS */
   &--mini {
     width: $mini-size;
     height: $mini-size;
-
-    .mr-floating-action-button__icon, .mr-floating-action-button__iconToggled {
-      top: $mini-offset;
-      left: $mini-offset;
-    }
-  }
-
-  &--active {
-    @include elevated(12);
-  }
-
-  &--disabled {
-    box-shadow: none;
-    cursor: not-allowed;
   }
 
   &--toggled {
-    .mr-floating-action-button__icon {
-      opacity: 0;
-      transform: rotate(45deg);
+    & > .mr-floating-action-button {
+      opacity: 1;
+      transform: scale(1);
     }
 
-    .mr-floating-action-button__iconToggled {
+    & > .mr-floating-action-button__wash {
+      right: 0;
+      bottom: 0;
+
       opacity: 1;
-      transform: rotate(0);
     }
   }
 }
