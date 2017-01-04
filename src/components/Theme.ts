@@ -19,6 +19,8 @@ export enum ThemeStyle
 
 export const DARK_VARIANT_TEXT_FORE:string = "rgba(0, 0, 0, .87)";
 export const LIGHT_VARIANT_TEXT_FORE:string =  "white";
+export const DARK_VARIANT_DIVIDER:string =  "rgba(0, 0, 0, .12)";
+export const LIGHT_VARIANT_DIVIDER:string =  "rgba(255, 255, 255, .12)";
 
 /**
  * Material Design theme.

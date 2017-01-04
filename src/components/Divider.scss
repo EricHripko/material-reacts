@@ -1,0 +1,15 @@
+@import "Component.scss";
+$height: 1px;
+
+.mr-divider {
+  height: $height;
+
+  cursor: default;
+  margin-left: 0;
+  transition: margin-left $anim-quick;
+  user-select: none;
+
+  &--inset {
+    margin-left: 72px;
+  }
+}

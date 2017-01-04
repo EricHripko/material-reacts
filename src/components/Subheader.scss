@@ -1,8 +1,10 @@
 $height: 48px;
 
 .mr-subheader {
-  cursor: default;
   height: $height;
+
+  cursor: default;
+  user-select: none;
 
   & > .mr-text-view {
     height: $height;
