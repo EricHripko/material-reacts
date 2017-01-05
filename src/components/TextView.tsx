@@ -111,7 +111,7 @@ export class TextView extends React.Component<TextViewProps & ComponentProps, {}
             // 'tint' overrides any coloring via textColor
             if (!this.props.tint) {
                 // no 'tint' and 'textColor' means that we apply MD's recommended colors
-                if (!textColor) {
+                if (!this.props.textColor) {
                     switch (this.props.textStyle) {
                         default:
                             textColor = this.props.theme.text;
