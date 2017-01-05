@@ -21,6 +21,10 @@ export const DARK_VARIANT_TEXT_FORE:string = "rgba(0, 0, 0, .87)";
 export const LIGHT_VARIANT_TEXT_FORE:string =  "white";
 export const DARK_VARIANT_DIVIDER:string =  "rgba(0, 0, 0, .12)";
 export const LIGHT_VARIANT_DIVIDER:string =  "rgba(255, 255, 255, .12)";
+export const DARK_VARIANT_CARD:string =  "#424242";
+export const LIGHT_VARIANT_CARD:string =  "white";
+export const DARK_VARIANT_BACKGROUND:string =  "#303030";
+export const LIGHT_VARIANT_BACKGROUND:string =  "#fafafa";
 
 /**
  * Material Design theme.
@@ -287,14 +291,11 @@ export class Theme {
                 this.flatPressed = "rgba(153, 153, 153, 0.40)";
                 this.elevatedBack = "white";
                 this.elevatedPressed = "rgb(224, 224, 224)";
-                this.background = "#fafafa";
                 this.text = "rgba(0, 0, 0, .87)";
                 this.textSecondary = "rgba(0, 0, 0, 0.54)";
                 this.textHint = "rgba(0, 0, 0, 0.38)";
                 this.iconActive = "rgba(0, 0, 0, 0.54)";
                 this.iconInactive = "rgba(0, 0, 0, 0.26)";
-                this.divider = "rgba(0, 0, 0, 0.12)";
-                this.card = "white";
                 break;
             case ThemeStyle.Dark:
                 this.disabledElevatedFore = "rgba(255, 255, 255, 0.30)";
@@ -303,14 +304,11 @@ export class Theme {
                 this.flatPressed = "rgba(204, 204, 204, 0.25)";
                 this.elevatedBack = Theme.colors[color][500];
                 this.elevatedPressed = Theme.colors[color][700];
-                this.background = "#303030";
                 this.text = "white";
                 this.textSecondary = "rgba(255, 255, 255, 0.70)";
                 this.textHint = "rgba(255, 255, 255, 0.30)";
                 this.iconActive = "white";
                 this.iconInactive = "rgba(255, 255, 255, 0.30)";
-                this.divider = "rgba(255, 255, 255, 0.12)";
-                this.card = "#424242";
                 break;
         }
 

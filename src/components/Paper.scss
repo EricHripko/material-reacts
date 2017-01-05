@@ -1,0 +1,16 @@
+@import "Component.scss";
+
+.mr-paper {
+  border: solid 1px;
+  box-sizing: border-box;
+  cursor: default;
+  user-select: none;
+
+  &--card {
+    border-radius: 2px;
+  }
+
+  &--root {
+    border: none;
+  }
+}

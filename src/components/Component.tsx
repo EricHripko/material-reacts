@@ -112,9 +112,18 @@ export class TintComponent<P extends ComponentProps, S extends ComponentState> e
 
     /**
      * Gets the actual variant of the control.
+     * This is to be called if 'variant' determines foreground of the control.
      */
     public get variant(): ThemeStyle {
         return this.props.variant || this.props.theme.toolbar;
+    }
+
+    /**
+     * Gets the actual variant of the control.
+     * This is to be called if 'variant' determines background of the control.
+     */
+    public get variantBase(): ThemeStyle {
+        return this.props.variant || this.props.theme.style;
     }
 
     /**
