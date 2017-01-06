@@ -8,5 +8,5 @@
   font-size: 0;
   font-feature-settings: 'liga';   /* Fix for web fonts in IE */
   outline: none;
-  transition: color $anim-quick;
+  transition: color $anim-quick, transform $anim-quick, opacity $anim-quick;
 }

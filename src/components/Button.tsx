@@ -38,8 +38,7 @@ export abstract class Button<P extends ComponentProps, S extends ComponentState>
     protected _activate(e: MouseEvent = null) {
         this.setState({
             isActive: this.state.isActive,
-            isFocus: this.state.isFocus,
-            inkColor: this.props.theme.elevatedPressed
+            isFocus: this.state.isFocus
         } as S);
 
         const root: HTMLDivElement = this.refs["me"] as HTMLDivElement;
@@ -78,8 +77,8 @@ export abstract class Button<P extends ComponentProps, S extends ComponentState>
         this._activate(null);
     }
 
-    onKeyUp() {
-        if(this.props.isDisabled) {
+    onKeyUp(e: KeyboardEvent<HTMLDivElement>) {
+        if(this.props.isDisabled || !isActionKey(e.keyCode)) {
             return;
         }
 

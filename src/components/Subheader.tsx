@@ -1,6 +1,6 @@
 import * as React from "react";
-import {ComponentProps, ComponentState, TintComponent, inheritDefaultProps} from "./Component";
-import {TextView, TextViewStyles, TextViewColors} from "./TextView";
+import {ActionType, ComponentProps, ComponentState, TintComponent, inheritDefaultProps} from "./Component";
+import {TextView, TextViewStyles} from "./TextView";
 import "./Subheader.css";
 
 /**
@@ -17,7 +17,10 @@ export class Subheader extends TintComponent<ComponentProps, ComponentState> {
         return (
             <div className={cls}
                  style={this.props.style}>
-                <TextView tint={this.props.tint} textColor={TextViewColors.Secondary} textStyle={TextViewStyles.Body2}>
+                <TextView tint={this.props.tint}
+                          variant={this.variantBase}
+                          action={ActionType.Secondary}
+                          textStyle={TextViewStyles.Body2}>
                     {this.props.children}
                 </TextView>
             </div>

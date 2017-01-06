@@ -1,11 +1,18 @@
 import * as React from "react";
 import {Ink} from "./Ink";
-import {Theme, ThemeStyle} from "./Theme";
+import {
+    Theme, ThemeStyle, DARK_VARIANT_FOCUS_SHADE, LIGHT_VARIANT_FOCUS_SHADE, DARK_VARIANT_INK_SPILL,
+    LIGHT_VARIANT_INK_SPILL
+} from "./Theme";
 
 /**
  * Styles available for the text view.
  */
 export enum ActionType {
+    /**
+     * Component does not have a specific action type.
+     */
+    None,
     /**
      * Component denotes primary action.
      */
@@ -37,11 +44,6 @@ export interface ComponentProps {
      * Type of the action that this component denotes.
      */
     action?: ActionType,
-    /**
-     * Color of the ink spill.
-     * Only used if element is actionable.
-     */
-    inkColor?: string,
     /**
      * Class names to be specified for the root element.
      */
@@ -93,21 +95,25 @@ export interface ComponentState {
  * 'this.prop.isDisabled' to provide the behaviour.
  */
 export class TintComponent<P extends ComponentProps, S extends ComponentState> extends React.Component<P, S> {
+    static contextTypes = {
+        theme: React.PropTypes.object
+    };
+    static childContextTypes = {
+        theme: React.PropTypes.object
+    };
+
     /**
      * Gets the effective tint of the control.
      */
     public get tint(): string {
-        if(this.props.action === undefined) {
-            return this.props.tint;
-        }
+        return this.calcTintColor();
+    }
 
-        switch(this.props.action)
-        {
-            case ActionType.Primary:
-                return this.props.theme.color;
-            case ActionType.Secondary:
-                return this.props.theme.accent;
-        }
+    /**
+     * Get theme for this control.
+     */
+    public get theme(): Theme {
+        return this.props.theme || this.context.theme || Theme.instance;
     }
 
     /**
@@ -115,7 +121,7 @@ export class TintComponent<P extends ComponentProps, S extends ComponentState> e
      * This is to be called if 'variant' determines foreground of the control.
      */
     public get variant(): ThemeStyle {
-        return this.props.variant || this.props.theme.toolbar;
+        return this.props.variant || this.theme.toolbar;
     }
 
     /**
@@ -123,18 +129,14 @@ export class TintComponent<P extends ComponentProps, S extends ComponentState> e
      * This is to be called if 'variant' determines background of the control.
      */
     public get variantBase(): ThemeStyle {
-        return this.props.variant || this.props.theme.style;
+        return this.props.variant || this.theme.style;
     }
 
     /**
      * Gets the effective ink color of the control.
      */
     public get inkColor() {
-        if(this.tint) {
-            return Theme.colors[this.tint][600];
-        }
-
-        return this.state.inkColor || this.props.theme.flatPressed;
+        return this.calcInkColor();
     }
 
     /**
@@ -145,11 +147,47 @@ export class TintComponent<P extends ComponentProps, S extends ComponentState> e
     }
 
     /**
+     * Calculate the default tint for this component.
+     * @returns {string} Tint to be used.
+     */
+    public calcTintColor(): string {
+        if(this.props.action === undefined) {
+            return this.props.tint;
+        }
+
+        switch(this.props.action)
+        {
+            case ActionType.Primary:
+                return this.theme.color;
+            case ActionType.Secondary:
+                return this.theme.accent;
+        }
+    }
+
+    /**
      * Calculate the default focus color for this component.
      * @returns {string} Color of the focus shade to be used.
      */
     public calcFocusColor(): string {
-        return this.props.theme.style === ThemeStyle.Light ? "rgba(0, 0, 0, 0.12)" : "rgba(255, 255, 255, 0.12)";
+        return (this.props.variant || this.theme.style) === ThemeStyle.Light
+            ? LIGHT_VARIANT_FOCUS_SHADE
+            : DARK_VARIANT_FOCUS_SHADE;
+    }
+
+    /**
+     * Calculate the default ink color for this component.
+     * @returns {string} Color of the ink spill to be used.
+     */
+    public calcInkColor(): string {
+        if(this.tint) {
+            return Theme.colors[this.tint][600];
+        }
+
+        return this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_INK_SPILL : DARK_VARIANT_INK_SPILL;
+    }
+
+    public getChildContext():any {
+        return {theme: this.theme};
     }
 
     /**
@@ -204,7 +242,6 @@ export class TintComponent<P extends ComponentProps, S extends ComponentState> e
  */
 const defaultProps = {
     isDisabled: false,
-    theme: Theme.instance,
     className: "",
     style: {}
 };

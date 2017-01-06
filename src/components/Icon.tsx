@@ -1,6 +1,9 @@
 import * as React from "react";
 import {ComponentProps, ComponentState, TintComponent, inheritDefaultProps, styles} from "./Component";
-import {Theme, ThemeStyle} from "./Theme";
+import {
+    Theme, ThemeStyle, DARK_VARIANT_ICON, LIGHT_VARIANT_ICON, DARK_VARIANT_ICON_INACTIVE,
+    LIGHT_VARIANT_ICON_INACTIVE
+} from "./Theme";
 import "./Icon.css";
 
 export interface IconProps {
@@ -23,9 +26,9 @@ export class Icon extends TintComponent<IconProps & ComponentProps, ComponentSta
     };
 
     render() {
-        let color:string = this.variant === ThemeStyle.Light ? "white" : "rgba(0, 0, 0, .54)";
+        let color:string = this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_ICON : DARK_VARIANT_ICON;
         if(this.props.isDisabled) {
-            color = this.variant === ThemeStyle.Light ? "rgba(255, 255, 255, .30)" : "rgba(0, 0, 0, .26)";
+            color = this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_ICON_INACTIVE : DARK_VARIANT_ICON_INACTIVE;
         }
         else if(this.props.customColor) {
             color = this.props.customColor;

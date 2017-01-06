@@ -1,6 +1,9 @@
 import * as React from "react";
-import {ComponentProps, inheritDefaultProps} from "./Component";
-import {Theme} from "./Theme";
+import {ActionType, ComponentProps, ComponentState, TintComponent, inheritDefaultProps} from "./Component";
+import {
+    Theme, ThemeStyle, DARK_VARIANT_TEXT_PRIMARY, LIGHT_VARIANT_TEXT_PRIMARY,
+    DARK_VARIANT_TEXT_SECONDARY, LIGHT_VARIANT_TEXT_SECONDARY, DARK_VARIANT_TEXT_HINT, LIGHT_VARIANT_TEXT_HINT
+} from "./Theme";
 import "./TextView.css";
 
 /**
@@ -54,38 +57,12 @@ export enum TextViewStyles
     Button
 }
 
-/**
- * Pre-defined colors available for the text view.
- */
-export enum TextViewColors
-{
-    /**
-     * Primary color.
-     * Used for main information on the screen.
-     */
-    Primary,
-    /**
-     * Secondary color.
-     * Used for additional information on the screen.
-     */
-    Secondary,
-    /**
-     * Disabled color.
-     * Used for inactive controls and text.
-     */
-    Disabled
-}
-
 export interface TextViewProps
 {
     /**
      * Appearance style for the text view.
      */
-    textStyle?: TextViewStyles,
-    /**
-     * Default color for the text view.
-     */
-    textColor?: TextViewColors,
+    textStyle?: TextViewStyles
     /**
      * Override the color in the text view with the given value.
      */
@@ -95,7 +72,7 @@ export interface TextViewProps
 /**
  * Text view adhering to Material Design > Typography recommendations.
  */
-export class TextView extends React.Component<TextViewProps & ComponentProps, {}> {
+export class TextView extends TintComponent<TextViewProps & ComponentProps, ComponentState> {
     static defaultProps = {
         textStyle: "body1",
     };
@@ -103,67 +80,77 @@ export class TextView extends React.Component<TextViewProps & ComponentProps, {}
     render() {
         const cls = "mr-text-view mr-text-view--" + TextViewStyles[this.props.textStyle].toLowerCase();
 
+        const textPrimary:string = this.variantBase === ThemeStyle.Light
+            ? LIGHT_VARIANT_TEXT_PRIMARY
+            : DARK_VARIANT_TEXT_PRIMARY;
+        const textSecondary:string = this.variantBase === ThemeStyle.Light
+            ? LIGHT_VARIANT_TEXT_SECONDARY
+            : DARK_VARIANT_TEXT_SECONDARY;
+        const textHint:string = this.variantBase === ThemeStyle.Light
+            ? LIGHT_VARIANT_TEXT_HINT
+            : DARK_VARIANT_TEXT_HINT;
+
         let textColor:string;
+        if(this.props.isDisabled) {
+            textColor = textHint;
+        }
         if(this.props.customColor) {
             textColor = this.props.customColor;
         }
         else {
             // 'tint' overrides any coloring via textColor
             if (!this.props.tint) {
-                // no 'tint' and 'textColor' means that we apply MD's recommended colors
-                if (!this.props.textColor) {
+                // no 'tint' and 'action' means that we apply MD's recommended colors
+                if (!this.props.action) {
                     switch (this.props.textStyle) {
                         default:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                         case TextViewStyles.Display4:
-                            textColor = this.props.theme.textSecondary;
+                            textColor = textSecondary;
                             break;
                         case TextViewStyles.Display3:
-                            textColor = this.props.theme.textSecondary;
+                            textColor = textSecondary;
                             break;
                         case TextViewStyles.Display2:
-                            textColor = this.props.theme.textSecondary;
+                            textColor = textSecondary;
                             break;
                         case TextViewStyles.Display1:
-                            textColor = this.props.theme.textSecondary;
+                            textColor = textSecondary;
                             break;
                         case TextViewStyles.Headline:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                         case TextViewStyles.Title:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                         case TextViewStyles.Subheading:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                         case TextViewStyles.Body2:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                         case TextViewStyles.Body1:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                         case TextViewStyles.Caption:
-                            textColor = this.props.theme.textSecondary;
+                            textColor = textSecondary;
                             break;
                         case TextViewStyles.Button:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
                     }
                 }
                 else {
-                    switch (this.props.textColor) {
+                    switch (this.props.action) {
                         default:
-                            textColor = this.props.theme.text;
+                            textColor = textPrimary;
                             break;
-                        case TextViewColors.Primary:
-                            textColor = this.props.theme.text;
+                        case ActionType.Primary:
+                            textColor = textPrimary;
                             break;
-                        case TextViewColors.Secondary:
-                            textColor = this.props.theme.textSecondary;
-                            break;
-                        case TextViewColors.Disabled:
-                            textColor = this.props.theme.textHint;
+                        case ActionType.Secondary:
+                            textColor = textSecondary;
                             break;
                     }
                 }

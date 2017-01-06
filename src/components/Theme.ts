@@ -4,27 +4,43 @@
 export enum ThemeStyle
 {
     /**
+     * No theme specified.
+     */
+    None,
+    /**
      * Dark theme.
      */
     Dark,
     /**
      * Light theme.
      */
-    Light,
-    /**
-     * Mixed theme.
-     */
-    Mixed
+    Light
 }
 
 export const DARK_VARIANT_TEXT_FORE:string = "rgba(0, 0, 0, .87)";
-export const LIGHT_VARIANT_TEXT_FORE:string =  "white";
-export const DARK_VARIANT_DIVIDER:string =  "rgba(0, 0, 0, .12)";
-export const LIGHT_VARIANT_DIVIDER:string =  "rgba(255, 255, 255, .12)";
-export const DARK_VARIANT_CARD:string =  "#424242";
-export const LIGHT_VARIANT_CARD:string =  "white";
-export const DARK_VARIANT_BACKGROUND:string =  "#303030";
-export const LIGHT_VARIANT_BACKGROUND:string =  "#fafafa";
+export const LIGHT_VARIANT_TEXT_FORE:string = "white";
+export const DARK_VARIANT_DIVIDER:string = "rgba(255, 255, 255, .12)";
+export const LIGHT_VARIANT_DIVIDER:string = "rgba(0, 0, 0, .12)";
+export const DARK_VARIANT_CARD:string = "#424242";
+export const LIGHT_VARIANT_CARD:string = "white";
+export const DARK_VARIANT_BACKGROUND:string = "#303030";
+export const LIGHT_VARIANT_BACKGROUND:string = "#fafafa";
+export const DARK_VARIANT_FOCUS_SHADE:string = "rgba(255, 255, 255, 0.12)";
+export const LIGHT_VARIANT_FOCUS_SHADE:string = "rgba(0, 0, 0, 0.12)";
+export const DARK_VARIANT_INK_SPILL:string = "rgba(204, 204, 204, 0.25)";
+export const LIGHT_VARIANT_INK_SPILL:string = "rgba(153, 153, 153, 0.40)";
+export const LIGHT_VARIANT_FLAT_DISABLED:string = "rgba(153, 153, 153, 0.40)";
+export const DARK_VARIANT_FLAT_DISABLED:string = "rgba(255, 255, 255, 0.30)";
+export const LIGHT_VARIANT_TEXT_PRIMARY:string = "rgba(0, 0, 0, .87)";
+export const DARK_VARIANT_TEXT_PRIMARY:string = "white";
+export const LIGHT_VARIANT_TEXT_SECONDARY:string = "rgba(0, 0, 0, 0.54)";
+export const DARK_VARIANT_TEXT_SECONDARY:string = "rgba(255, 255, 255, 0.70)";
+export const LIGHT_VARIANT_TEXT_HINT:string = "rgba(0, 0, 0, 0.38)";
+export const DARK_VARIANT_TEXT_HINT:string = "rgba(255, 255, 255, 0.30)";
+export const LIGHT_VARIANT_ICON:string = "rgba(0, 0, 0, .54)";
+export const DARK_VARIANT_ICON:string = "white";
+export const LIGHT_VARIANT_ICON_INACTIVE:string = "rgba(0, 0, 0, .26)";
+export const DARK_VARIANT_ICON_INACTIVE:string = "rgba(255, 255, 255, .30)";
 
 /**
  * Material Design theme.
@@ -193,14 +209,6 @@ export class Theme {
      */
     disabledElevatedBack: string;
     /**
-     * Foreground color of a flat button in disabled state.
-     */
-    disabledFlatFore: string;
-    /**
-     * Foreground color of a flat button in pressed state.
-     */
-    flatPressed: string;
-    /**
      * Background color of an elevated button in normal state.
      */
     elevatedBack: string;
@@ -208,38 +216,6 @@ export class Theme {
      * Background color of an elevated button in pressed state.
      */
     elevatedPressed: string;
-    /**
-     * Background color of the main view.
-     */
-    background: string;
-    /**
-     * Foreground color of any un-styled primary text.
-     */
-    text: string;
-    /**
-     * Foreground color of any un-styled secondary text.
-     */
-    textSecondary: string;
-    /**
-     * Foreground color of any un-styled hints or disabled text.
-     */
-    textHint: string;
-    /**
-     * Foreground color of an active icon.
-     */
-    iconActive: string;
-    /**
-     * Foreground color of an inactive icon.
-     */
-    iconInactive: string;
-    /**
-     * Foreground color of content dividers.
-     */
-    divider: string;
-    /**
-     * Background color of cards.
-     */
-    card: string;
 
     /**
      * Primary color for this theme.
@@ -287,28 +263,14 @@ export class Theme {
             default:
                 this.disabledElevatedFore = "rgba(0, 0, 0, 0.26)";
                 this.disabledElevatedBack = "rgba(0, 0, 0, 0.12)";
-                this.disabledFlatFore = "rgba(0, 0, 0, 0.26)";
-                this.flatPressed = "rgba(153, 153, 153, 0.40)";
                 this.elevatedBack = "white";
                 this.elevatedPressed = "rgb(224, 224, 224)";
-                this.text = "rgba(0, 0, 0, .87)";
-                this.textSecondary = "rgba(0, 0, 0, 0.54)";
-                this.textHint = "rgba(0, 0, 0, 0.38)";
-                this.iconActive = "rgba(0, 0, 0, 0.54)";
-                this.iconInactive = "rgba(0, 0, 0, 0.26)";
                 break;
             case ThemeStyle.Dark:
                 this.disabledElevatedFore = "rgba(255, 255, 255, 0.30)";
                 this.disabledElevatedBack = "rgba(255, 255, 255, 0.12)";
-                this.disabledFlatFore = "rgba(255, 255, 255, 0.30)";
-                this.flatPressed = "rgba(204, 204, 204, 0.25)";
                 this.elevatedBack = Theme.colors[color][500];
                 this.elevatedPressed = Theme.colors[color][700];
-                this.text = "white";
-                this.textSecondary = "rgba(255, 255, 255, 0.70)";
-                this.textHint = "rgba(255, 255, 255, 0.30)";
-                this.iconActive = "white";
-                this.iconInactive = "rgba(255, 255, 255, 0.30)";
                 break;
         }
 

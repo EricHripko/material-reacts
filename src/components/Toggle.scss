@@ -1,0 +1,37 @@
+@import "Component.scss";
+$size: 48px;
+
+.mr-toggle {
+  @include ink-container();
+
+  display: inline-block;
+  width: $size;
+  height: $size;
+
+  border-radius: 100%;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+
+  /* ELEMENTS */
+  &__background, &__foreground {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+
+  &__background { opacity: 1; }
+
+  &__foreground { transform: scale(0); }
+
+  /* MODIFIERS */
+  &--toggled {
+    .mr-toggle__background { opacity: 0; }
+
+    .mr-toggle__foreground { transform: scale(1); }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+}

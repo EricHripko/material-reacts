@@ -4,7 +4,7 @@ import {ComponentProps, ComponentState, inheritDefaultProps} from "./Component";
 import {Focus} from "./Focus";
 import {Ink} from "./Ink";
 import {TextView, TextViewStyles} from "./TextView";
-import {Theme, ThemeStyle, LIGHT_VARIANT_TEXT_FORE, DARK_VARIANT_TEXT_FORE} from "./Theme";
+import {Theme, ThemeStyle, DARK_VARIANT_TEXT_PRIMARY, LIGHT_VARIANT_TEXT_PRIMARY} from "./Theme";
 import "./RaisedButton.css";
 
 /**
@@ -26,19 +26,21 @@ export class RaisedButton extends Button<ComponentProps, ComponentState> {
             cls += " mr-raised-button--active";
         }
 
-        let foreColor:string = this.variant === ThemeStyle.Light ? LIGHT_VARIANT_TEXT_FORE : DARK_VARIANT_TEXT_FORE;
-        let backColor:string = this.tint ? Theme.colors[this.tint][500] : this.props.theme.elevatedBack;
+        let foreColor:string = this.variant === ThemeStyle.Light
+            ? LIGHT_VARIANT_TEXT_PRIMARY
+            : DARK_VARIANT_TEXT_PRIMARY;
+        let backColor:string = this.tint ? Theme.colors[this.tint][500] : this.theme.elevatedBack;
         let tabIndex:number = 0;
 
         if(this.props.isDisabled) {
-            foreColor = this.props.theme.disabledElevatedFore;
-            backColor = this.props.theme.disabledElevatedBack;
+            foreColor = this.theme.disabledElevatedFore;
+            backColor = this.theme.disabledElevatedBack;
             tabIndex = -1;
         }
 
         // Do not allow overriding color with un-tinted button of Light theme
         // Note: this is to avoid avoid white text on white button
-        if(this.props.theme.style === ThemeStyle.Light && !this.tint) {
+        if(this.theme.style === ThemeStyle.Light && !this.tint) {
             foreColor = null;
         }
 

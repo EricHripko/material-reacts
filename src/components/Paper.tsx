@@ -36,6 +36,8 @@ export class Paper extends TintComponent<PaperProps & ComponentProps, ComponentS
             cls += "mr-paper--root";
         }
 
+        console.log(this.variantBase);
+
         let background:string = this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_CARD : DARK_VARIANT_CARD;
 
         // Background sheet

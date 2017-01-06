@@ -26,7 +26,7 @@ export class Divider extends TintComponent<DividerProps & ComponentProps, Compon
         }
 
         const style = styles(this.props.style, {
-            backgroundColor: this.variant === ThemeStyle.Light ? LIGHT_VARIANT_DIVIDER : DARK_VARIANT_DIVIDER
+            backgroundColor: this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_DIVIDER : DARK_VARIANT_DIVIDER
         });
 
         return (

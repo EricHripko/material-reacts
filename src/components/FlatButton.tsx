@@ -4,7 +4,7 @@ import {ComponentProps, ComponentState, inheritDefaultProps, hex2rgba} from "./C
 import {Focus} from "./Focus";
 import {Ink} from "./Ink";
 import {TextView, TextViewStyles} from "./TextView";
-import {Theme} from "./Theme";
+import {Theme, ThemeStyle, DARK_VARIANT_FLAT_DISABLED, LIGHT_VARIANT_FLAT_DISABLED} from "./Theme";
 import "./FlatButton.css";
 
 /**
@@ -30,7 +30,10 @@ export class FlatButton extends Button<ComponentProps, ComponentState> {
             cls += " mr-flat-button--disabled";
         }
 
-        const color:string = this.props.isDisabled ? this.props.theme.disabledFlatFore : null;
+        const color:string = null;
+        if(this.props.isDisabled) {
+            color = this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_FLAT_DISABLED : DARK_VARIANT_FLAT_DISABLED;
+        }
         const tabIndex:number = !this.props.isDisabled ? 0 : -1;
         const tint:string = !this.props.isDisabled ? this.tint : null;
 
@@ -49,6 +52,7 @@ export class FlatButton extends Button<ComponentProps, ComponentState> {
                  onMouseLeave={this.onLeave}>
                 <TextView textStyle={TextViewStyles.Button}
                           tint={tint}
+                          variant={this.variantBase}
                           customColor={color}>
                     {this.props.children}
                 </TextView>
