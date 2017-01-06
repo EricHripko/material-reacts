@@ -1,0 +1,65 @@
+@import "Component.scss";
+
+.mr-switch {
+  display: inline-block;
+  width: 64px;
+  height: 48px;
+
+  position: relative;
+
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+
+  /* ELEMENTS */
+  &__track {
+    position: absolute;
+    top: 17px;
+    left: 14px;
+    right: 14px;
+
+    height: 14px;
+
+    border-radius: 7px;
+    transition: background $anim-quick;
+  }
+
+  &__thumb {
+    @include ink-container();
+
+    width: 48px;
+    height: 48px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    border-radius: 100%;
+    transition: left $anim-quick;
+  }
+
+  &__slider {
+    @include elevated(1);
+
+    width: 20px;
+    height: 20px;
+
+    margin: 14px;
+
+    border-radius: 100%;
+    transition: background $anim-quick;
+  }
+
+  /* MODIFIERS */
+  &--toggled {
+    .mr-switch__track { opacity: .5; }
+
+    .mr-switch__thumb { left: 16px; }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+
+    .mr-switch__track { opacity: 1; }
+  }
+}

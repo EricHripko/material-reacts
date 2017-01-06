@@ -2,42 +2,36 @@ import * as React from "react";
 import {Button} from "./Button";
 import {ComponentProps, ComponentState, hex2rgba, inheritDefaultProps, styles} from "./Component";
 import {Focus} from "./Focus";
-import {Icon} from "./Icon";
 import {Ink} from "./Ink";
 import {
     Theme, ThemeStyle, DARK_VARIANT_FOCUS_SHADE, LIGHT_VARIANT_FOCUS_SHADE, DARK_VARIANT_INK_SPILL,
-    LIGHT_VARIANT_INK_SPILL
+    LIGHT_VARIANT_INK_SPILL, DARK_VARIANT_SWITCH_TRACK, LIGHT_VARIANT_SWITCH_TRACK, DARK_VARIANT_SWITCH_TRACK_INACTIVE,
+    LIGHT_VARIANT_SWITCH_TRACK_INACTIVE
 } from "./Theme";
-import "./Toggle.css";
+import "./Switch.css";
 
-export interface ToggleProps {
+export interface SwitchProps {
     /**
-     * Whether the toggle is a radio or a checkbox.
-     */
-    isRadio?: boolean,
-    /**
-     * Whether the toggle is switched on or off.
+     * Whether the switch is turned on or off.
      */
     isToggled: boolean
 }
 
-export interface ToggleState {
+export interface SwitchState {
     /**
-     * Whether the toggle is switched on or off.
+     * Whether the switch is turned on or off.
      */
     isToggled: boolean
 }
 
 /**
- * Selection controls allow the user to select options. Checkboxes
- * allow the selection of multiple options from a set. Radio buttons
- * allow the selection of a single option from a set. Selection controls
+ * Selection controls allow the user to select options. Switches
+ * allow a selection to be turned on or off. Selection controls
  * use an theme’s accent color. This component adheres to Material
  * Design > Selection controls recommendations.
  */
-export class Toggle extends Button<ToggleProps & ComponentProps, ToggleState & ComponentState> {
+export class Switch extends Button<SwitchProps & ComponentProps, SwitchState & ComponentState> {
     static defaultProps = {
-        isRadio: false
     };
 
     /*
@@ -64,7 +58,7 @@ export class Toggle extends Button<ToggleProps & ComponentProps, ToggleState & C
         return this.variantBase === ThemeStyle.Light ? LIGHT_VARIANT_INK_SPILL : DARK_VARIANT_INK_SPILL;
     }
 
-    constructor(props: ToggleProps & ComponentProps) {
+    constructor(props: SwitchProps & ComponentProps) {
         super(props);
 
         this.state = {
@@ -105,18 +99,15 @@ export class Toggle extends Button<ToggleProps & ComponentProps, ToggleState & C
     }
 
     render() {
-        let cls:string = "mr-toggle " + this.props.className;
-        if(this.props.isRadio) {
-            cls += "mr-toggle--radio";
-        }
+        let cls:string = "mr-switch " + this.props.className;
         if(this.props.isDisabled) {
-            cls += " mr-toggle--disabled";
+            cls += " mr-switch--disabled";
         }
         if(this.state.isActive) {
-            cls += " mr-toggle--active";
+            cls += " mr-switch--active";
         }
         if(this.state.isToggled) {
-            cls += " mr-toggle--toggled";
+            cls += " mr-switch--toggled";
         }
 
         let tabIndex:number = 0;
@@ -124,12 +115,31 @@ export class Toggle extends Button<ToggleProps & ComponentProps, ToggleState & C
             tabIndex = -1;
         }
 
-        const foreIcon:string = this.props.isRadio ? "radio_button_checked" : "check_box";
-        const backIcon:string = this.props.isRadio ? "radio_button_unchecked" : "check_box_outline_blank";
+        let trackColor:string;
+        let sliderColor:string;
+        if(this.variantBase === ThemeStyle.Dark) {
+            if(this.props.isDisabled) {
+                trackColor = DARK_VARIANT_SWITCH_TRACK_INACTIVE;
+                sliderColor = Theme.colors["grey"][800];
+            }
+            else {
+                trackColor = this.state.isToggled ? Theme.colors[this.tint][200] : DARK_VARIANT_SWITCH_TRACK;
+                sliderColor = this.state.isToggled ? Theme.colors[this.tint][200] : Theme.colors["grey"][400];
+            }
+        }
+        else {
+            if(this.props.isDisabled) {
+                trackColor = LIGHT_VARIANT_SWITCH_TRACK_INACTIVE;
+                sliderColor = Theme.colors["grey"][400];
+            }
+            else {
+                trackColor = this.state.isToggled ? Theme.colors[this.tint][500] : LIGHT_VARIANT_SWITCH_TRACK;
+                sliderColor = this.state.isToggled ? Theme.colors[this.tint][500] : Theme.colors["grey"][50];
+            }
+        }
 
         return (
-            <div ref="me"
-                 className={cls}
+            <div className={cls}
                  style={this.props.style}
                  tabIndex={tabIndex}
 
@@ -141,24 +151,26 @@ export class Toggle extends Button<ToggleProps & ComponentProps, ToggleState & C
                  onBlur={this.onBlur}
                  onMouseEnter={this.onHover}
                  onMouseLeave={this.onLeave}>
-                <Icon className="mr-toggle__background"
-                      variant={this.props.variant}
-                      isDisabled={this.props.isDisabled}>{backIcon}</Icon>
-                <Icon className="mr-toggle__foreground"
-                      variant={this.props.variant}
-                      tint={this.tint}
-                      isDisabled={this.props.isDisabled}>{foreIcon}</Icon>
-                <Ink ref="ink"
-                     isActive={this.state.isActive}
-                     color={this.inkColor}
-                     size={this.state.inkSpillSize}
-                     originTop={this.state.inkOriginTop}
-                     originLeft={this.state.inkOriginLeft}/>
-                <Focus isActive={this.state.isFocus}
-                       color={this.focusColor}/>
+                <div className="mr-switch__track"
+                     style={{backgroundColor: trackColor}}>
+                </div>
+                <div ref="me"
+                     className="mr-switch__thumb">
+                    <div className="mr-switch__slider"
+                         style={{backgroundColor: sliderColor}}>
+                    </div>
+                    <Ink ref="ink"
+                         isActive={this.state.isActive}
+                         color={this.inkColor}
+                         size={this.state.inkSpillSize}
+                         originTop={this.state.inkOriginTop}
+                         originLeft={this.state.inkOriginLeft}/>
+                    <Focus isActive={this.state.isFocus}
+                           color={this.focusColor}/>
+                </div>
             </div>
         );
     }
 }
 
-inheritDefaultProps(Toggle);
+inheritDefaultProps(Switch);

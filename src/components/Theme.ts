@@ -41,6 +41,10 @@ export const LIGHT_VARIANT_ICON:string = "rgba(0, 0, 0, .54)";
 export const DARK_VARIANT_ICON:string = "white";
 export const LIGHT_VARIANT_ICON_INACTIVE:string = "rgba(0, 0, 0, .26)";
 export const DARK_VARIANT_ICON_INACTIVE:string = "rgba(255, 255, 255, .30)";
+export const LIGHT_VARIANT_SWITCH_TRACK:string = "rgba(0, 0, 0, .38)";
+export const DARK_VARIANT_SWITCH_TRACK:string = "rgba(255, 255, 255, .30)";
+export const LIGHT_VARIANT_SWITCH_TRACK_INACTIVE:string = "rgba(0, 0, 0, .12)";
+export const DARK_VARIANT_SWITCH_TRACK_INACTIVE:string = "rgba(255, 255, 255, .10)";
 
 /**
  * Material Design theme.
@@ -173,7 +177,8 @@ export class Theme {
             400: "#BDBDBD",
             500: "#9E9E9E",
             600: "#757575",
-            700: "#616161"
+            700: "#616161",
+            800: "#424242"
         },
         "lime": {
             500: "#CDDC39",
