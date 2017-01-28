@@ -44,6 +44,10 @@ export interface TextFieldProps {
      */
     showCounter?:boolean,
     /**
+     * Maximum length of the input string.
+     */
+    maxLength?:number,
+    /**
      * Type of the input.
      */
     type?:string
@@ -65,7 +69,11 @@ export interface TextFieldState {
     /**
      * Number of lines in the text editing control.
      */
-    lines:number
+    lines:number,
+    /**
+     * Number of characters in the text editing control.
+     */
+    chars?:number
 }
 
 /**
@@ -84,12 +92,16 @@ export class TextField extends TintComponent<TextFieldProps & ComponentProps, Te
      * and has a special behaviour when in
      * invalid state.
      */
-    public get tint() {
+    public get tint():string {
         if(this.state && this.state.isInvalid) {
             return TEXT_FIELD_TINT_INVALID;
         }
 
         return this.calcTintColor() || this.theme.accent;
+    }
+
+    protected get hasCounter():boolean {
+        return this.props.maxLength && this.props.showCounter;
     }
 
     constructor(props: TextFieldProps & ComponentProps) {
@@ -109,6 +121,10 @@ export class TextField extends TintComponent<TextFieldProps & ComponentProps, Te
             /* Text areas start with 2 lines in browsers */
             lines: this.props.isMultiline ? 2 : 1
         };
+
+        if(this.hasCounter && this.props.defaultValue) {
+            this.state.chars = this.props.defaultValue.length;
+        }
     }
 
     onActivate() {
@@ -177,27 +193,41 @@ export class TextField extends TintComponent<TextFieldProps & ComponentProps, Te
             lines = 1;
         }
 
+        // Validate the input contents
         let message:string;
         let isInvalid:boolean;
         if(this.props.validationCallback) {
             message = this.props.validationCallback(input.value);
             isInvalid = !!message;
         }
+        // Validate the input length
+        if(this.hasCounter && input.value.length > this.props.maxLength) {
+            // Note that we copy the helper to the validationMessage
+            // to preserve it when user exceeded allowed max. length
+            message = this.props.helper;
+            isInvalid = true;
+        }
 
-        this.setState({
+        let state:TextFieldState & ComponentState = {
             isActive: this.state.isActive,
             isInvalid: isInvalid,
             isFocus: !!input.value,
             validationMessage: message,
             lines: lines
-        });
+        };
+
+        if(this.hasCounter) {
+            state.chars = input.value.length;
+        }
+
+        this.setState(state);
     }
 
     render() {
         let input:HTMLInputElement = this.refs["input"] as HTMLInputElement;
         const isWithValue:boolean = !!(input ? input.value : this.props.defaultValue);
         const isCollapsed:boolean = this.state.isActive || isWithValue;
-        const footerPresent:boolean = !!this.props.helper;
+        const footerPresent:boolean = !!this.props.helper || this.hasCounter;
 
         let cls:string = "mr-text-field " + this.props.className;
         if(this.props.isDisabled) {
@@ -219,7 +249,7 @@ export class TextField extends TintComponent<TextFieldProps & ComponentProps, Te
         if(this.props.icon) {
             cls += " mr-text-field--with-icon";
         }
-        if(this.props.showCounter) {
+        if(this.hasCounter) {
             cls += " mr-text-field--with-counter";
         }
         cls += " mr-text-field--tint-" + this.tint;
@@ -302,7 +332,7 @@ export class TextField extends TintComponent<TextFieldProps & ComponentProps, Te
                           textStyle={TextViewStyles.Caption}
                           variant={this.variantBase}
                           isDisabled={true}>
-                    000/999
+                    {this.state.chars}&nbsp;/&nbsp;{this.props.maxLength}
                 </TextView>
                 <TextView className="mr-text-field__helper"
                           textStyle={TextViewStyles.Caption}
