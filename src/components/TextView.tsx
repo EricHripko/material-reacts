@@ -78,7 +78,8 @@ export class TextView extends TintComponent<TextViewProps & ComponentProps, Comp
     };
 
     render() {
-        const cls = "mr-text-view mr-text-view--" + TextViewStyles[this.props.textStyle].toLowerCase();
+        let cls:string = "mr-text-view mr-text-view--" + TextViewStyles[this.props.textStyle].toLowerCase();
+        cls += " " + this.props.className;
 
         const textPrimary:string = this.variantBase === ThemeStyle.Light
             ? LIGHT_VARIANT_TEXT_PRIMARY
@@ -97,7 +98,7 @@ export class TextView extends TintComponent<TextViewProps & ComponentProps, Comp
         if(this.props.customColor) {
             textColor = this.props.customColor;
         }
-        else {
+        else if(!textColor) {
             // 'tint' overrides any coloring via textColor
             if (!this.props.tint) {
                 // no 'tint' and 'action' means that we apply MD's recommended colors

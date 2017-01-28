@@ -1,0 +1,218 @@
+@import "Component.scss";
+
+/* Note that height of the control is set programmatically to support multi-line inputs */
+.mr-text-field {
+  width: 200px;
+
+  position: relative;
+
+  cursor: default;
+  user-select: none;
+  transition: height $anim-quick;
+
+  /* ELEMENTS */
+  &__icon {
+    display: none;
+  }
+
+  &__hint {
+    position: absolute;
+    top: 12px;
+
+    font-size: 13px;
+    line-height: 16px;
+    opacity: 1;
+    transition: font-size $anim-quick, color $anim-quick, top $anim-quick, opacity $anim-quick;
+  }
+
+  &__value {
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+
+    width: 100%;
+
+    background-color: transparent;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+    resize: none;
+    transition: opacity $anim-quick, color $anim-quick, height $anim-quick;
+  }
+
+  &__ruler {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    z-index: -1;
+
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    visibility: hidden;
+  }
+
+  &__border-default {
+    width: 100%;
+
+    position: absolute;
+    bottom: 4px;
+
+    border-bottom: 1px solid;
+  }
+
+  &__border-active {
+    width: 0;
+
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+
+    border-bottom: 2px solid;
+    transition: left $anim-quick, width $anim-quick,  border $anim-quick;
+  }
+
+  &__counter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    display: block;
+    opacity: 0;
+    transition: color $anim-quick;
+  }
+
+  &__helper {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    display: block;
+    opacity: 0;
+    overflow: hidden;
+    transition: color $anim-quick, opacity $anim-quick;
+    white-space: nowrap;
+  }
+
+  /* MODIFIERS */
+  &--active {
+    .mr-text-field {
+      &__value { opacity: 1; }
+
+      &__border-active {
+        left: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  &--with-value {
+    .mr-text-field {
+      &__hint {
+        opacity: 0;
+      }
+
+      &__value { opacity: 1; }
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+
+    & > * { cursor: not-allowed; }
+
+    .mr-text-field {
+      &__border-default { border-bottom-style: dashed; }
+    }
+  }
+
+  &--floating {
+    .mr-text-field {
+      &__hint { top: 32px; }
+    }
+  }
+
+  &--floating.mr-text-field--with-value {
+    .mr-text-field {
+      &__hint {
+        top: 12px;
+        font-size: 12px;
+        opacity: 1;
+      }
+    }
+  }
+
+  &--floating.mr-text-field--active {
+    .mr-text-field {
+      &__hint {
+        top: 12px;
+        font-size: 12px;
+        opacity: 1;
+      }
+    }
+  }
+
+  &--with-icon {
+    .mr-text-field {
+      &__icon {
+        display: inline-block;
+
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+
+      &__hint, &__helper { left: 40px; }
+
+      &__value, &__border-default {
+        left: 40px;
+        width: calc(100% - 40px);
+      }
+
+      &__border-active {
+        left: calc(50% + 40px);
+      }
+    }
+  }
+
+  &--with-icon.mr-text-field--active {
+    .mr-text-field__border-active {
+      left: 40px;
+      width: calc(100% - 40px);
+    }
+  }
+
+  &--with-icon.mr-text-field--floating {
+    .mr-text-field__icon {
+      top: 30px;
+    }
+  }
+
+  &--with-footer {
+    .mr-text-field {
+      &__border-default, &__border-active { bottom: 20px; }
+      &__value, &__ruler { bottom: 28px; }
+      &__helper { opacity: 1; }
+    }
+  }
+
+  &--with-counter {
+    .mr-text-field {
+      &__helper { right: 56px; }
+      &__counter { opacity: 1; }
+    }
+  }
+
+  &--tint-pink-accent { .mr-text-field__value::selection { background-color: #FF80AB; } }
+  &--tint-yellow-accent { .mr-text-field__value::selection { background-color: #FFFF8D; } }
+  &--tint-red { .mr-text-field__value::selection { background-color: #FFCDD2; } }
+}

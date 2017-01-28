@@ -41,7 +41,8 @@ export class Icon extends TintComponent<IconProps & ComponentProps, ComponentSta
         const style = styles(this.props.style, {
             color: color,
             width: this.props.size + "px",
-            height: this.props.size + "px"
+            height: this.props.size + "px",
+            fontSize: this.props.size + "px"
         });
 
         return (

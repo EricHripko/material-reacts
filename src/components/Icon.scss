@@ -9,4 +9,6 @@
   font-feature-settings: 'liga';   /* Fix for web fonts in IE */
   outline: none;
   transition: color $anim-quick, transform $anim-quick, opacity $anim-quick;
+
+  & > .material-icons { font-size: inherit; }
 }

@@ -17,8 +17,6 @@ export enum ThemeStyle
     Light
 }
 
-export const DARK_VARIANT_TEXT_FORE:string = "rgba(0, 0, 0, .87)";
-export const LIGHT_VARIANT_TEXT_FORE:string = "white";
 export const DARK_VARIANT_DIVIDER:string = "rgba(255, 255, 255, .12)";
 export const LIGHT_VARIANT_DIVIDER:string = "rgba(0, 0, 0, .12)";
 export const DARK_VARIANT_CARD:string = "#424242";
@@ -61,11 +59,15 @@ export class Theme {
             700: "#388E3C"
         },
         "red": {
+            100: "#FFCDD2",
+            200: "#EF9A9A",
             300: "#E57373",
             400: "#EF5350",
             500: "#F44336",
             600: "#E53935",
-            700: "#D32F2F"
+            700: "#D32F2F",
+            800: "#C62828",
+            900: "#B71C1C"
         },
         "pink": {
             300: "#F06292",
@@ -202,6 +204,15 @@ export class Theme {
             700: "#512DA8",
             800: "#4527A0",
             900: "#311B92"
+        },
+        "yellow-accent": {
+            100: "#FFFF8D",
+            200: "#FFFF00",
+            300: "#FFFF00",
+            400: "#FFEA00",
+            500: "#FFEA00",
+            600: "#FFD600",
+            700: "#FFD600"
         }
     };
 
@@ -257,7 +268,7 @@ export class Theme {
     static _instance = null;
     static get instance() {
         if(!Theme._instance)
-            Theme._instance = new Theme("indigo", "pink", ThemeStyle.Light, ThemeStyle.Light);
+            Theme._instance = new Theme("blue", "yellow-accent", ThemeStyle.Light, ThemeStyle.Light);
 
         return Theme._instance;
     }
